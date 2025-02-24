@@ -2,6 +2,7 @@
  
  ```sql
  ALTER TABLE fabricantes RENAME TO generos;
+ ALTER TABLE filme RENAME TO filmes;
 
  ```
 
@@ -44,7 +45,17 @@ CREATE TABLE filme(
 
 ### relacionamento estrangeiro
 ```sql
-ADD CONSTRAINT fk_generos_filmes_detalhes 
 
-FOREIGN KEY
+ALTER TABLE filme
+ADD CONSTRAINT fk_filme_generos
+FOREIGN KEY (generos_id) REFERENCES generos(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+ALTER TABLE detalhes
+ADD CONSTRAINT fk_detalhes_filme
+FOREIGN KEY (filmes_id) REFERENCES filme(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
 ```
