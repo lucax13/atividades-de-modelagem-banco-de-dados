@@ -28,7 +28,7 @@ SELECT * from fabricantes;
 ```sql
 INSERT INTO produtos(nome, descricao, preco, quantidade, fabricante_id)
 
-VALUES('Ultrabook','Equipamento de ultima geração', 3969.56, 7, 2);
+VALUES('Ultrabook','Equipamento de ultima geração', 3969.56, 7, 1);
 
 
 INSERT INTO produtos(nome, descricao, preco, quantidade, fabricante_id)
@@ -98,4 +98,16 @@ SELECT preco, nome  FROM produtos;
 SELECT nome, preco, quantidade FROM produtos
 WHERE preco < 5000;
 
+-- Mini-exercicio: mostre o nome de descrição somente dos produtos apple
+SELECT nome, descricao  FROM produtos
+WHERE fabricante_id = 2;
+```
+## Operadores logicos: E, OU e Não
+
+
+#### E (AND)
+```sql
+-- Exibir nome e preco dos produtos que custam entre 2000 e 6000
+SELECT nome, preco FROM produtos
+WHERE preco >=  2000 AND preco <= 6000;
 ```
