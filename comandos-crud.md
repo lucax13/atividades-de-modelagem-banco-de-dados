@@ -82,3 +82,20 @@ VALUES
     10
 );
 ```
+
+## SELECT (produtos)
+
+```sql
+--lendo todas as colunas todas registradas
+SELECT * FROM produtos;
+
+--lendo somento o nome e o preço registrados
+SELECT nome, preco FROM produtos;
+
+SELECT preco, nome  FROM produtos;
+
+--Mostrando nome, preço e quantidade somente dos produtos que custam abaixo de 5000
+SELECT nome, preco, quantidade FROM produtos
+WHERE preco < 5000;
+
+```
