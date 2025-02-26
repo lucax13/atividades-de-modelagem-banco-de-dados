@@ -123,5 +123,14 @@ WHERE fabricante_id = 2 OR  fabricante_id = 7;
 --Versão usando função sql IN()
 SELECT nome, descricao FROM produtos
 WHERE fabricante_id IN(3, 5);
+```
 
+#### Não (NOT)
+```sql
+-- nome, descrição e preço de todos os produtos EXCETO da positivo
+SELECT nome, descricao, preco FROM produtos
+WHERE NOT fabricante_id = 10
+
+SELECT nome, descricao, preco FROM produtos
+WHERE fabricante_id != 10
 ```
