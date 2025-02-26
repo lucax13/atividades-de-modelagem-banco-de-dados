@@ -25,5 +25,5 @@ VALUES ('Star Wars', 4 ,'2024-06-03');
 
 ```sql
 INSERT INTO filmes (duracao, sinopse, bilheteria)
-VALUES ();
+VALUES ('Dois amigos de infancia crescem e viram pilotos de fuga');
 ```
