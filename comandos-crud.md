@@ -151,6 +151,13 @@ UPDATE produtos  SET quantidade = 10
 WHERE preco < 2000 AND NOT fabricante_id = 11;
 ```
 
+## DELETE (Fabricantes e Produtos)
+
+**☠️ PRERIGO! 🚨**
+
+**SEMPRE USE** a cláusula `WHERE` em seu comando `DELETE` especificando uma ou mais condições para a atualização.
+
+
 ```sql
 DELETE FROM fabricantes WHERE id = 4;
 DELETE FROM fabricantes WHERE id = 1;
@@ -158,4 +165,95 @@ DELETE FROM fabricantes WHERE id = 1;
 DELETE FROM produtos WHERE id = 4;
 
 DELETE FROM fabricantes WHERE id = 2;
+```
+
+## SELECT: outras formas de uso
+
+### Classificação/Ordenação
+
+```sql
+-- DESC: ordena em ordem decrescente
+-- ASC: ordena em ordem crescente (padrão)
+SELECT nome, preco FROM produtos ORDER BY nome;
+SELECT nome, preco FROM produtos ORDER BY preco;
+SELECT nome, preco FROM produtos ORDER BY preco DESC;
+
+SELECT nome, preco, quantidade FROM produtos
+WHERE fabricante_id = 5 ORDER BY quantidade;
+```
+
+### Operações e funções de agregação
+
+```sql
+-- Função de SOMA (SUM)
+SELECT SUM(preco) FROM produtos;
+
+-- alias/apelido pra colunas
+SELECT SUM(preco) AS Total FROM produtos;
+SELECT SUM(preco) AS "Total dos Preços dos Produtos" FROM produtos; 
+SELECT nome AS Produto, preco as Preço FROM produtos;
+SELECT nome Produto, preco Preço FROM produtos; -- omitindo o AS
+
+-- Funções de formatação/configuração: FORMAT e REPLACE
+SELECT FORMAT(SUM(preco), 2) AS Total FROM produtos;
+SELECT REPLACE(FORMAT(SUM(preco), 2), ",", ".") AS Total FROM produtos;
+
+-- Função de média: AVG (Average) 
+-- Função de arredondamento: ROUND
+SELECT AVG(preco) AS "Média dos Preços" FROM produtos;
+SELECT ROUND(AVG(preco), 2) AS "Média dos Preços" FROM produtos;
+
+-- Função de contagem: COUNT
+SELECT COUNT(id) AS "Qtd de Produtos" FROM produtos;
+SELECT COUNT(DISTINCT fabricante_id) AS "Qtd de Fabricantes com Produtos" FROM produtos;
+
+-- Operações matemáticas
+SELECT nome, preco, quantidade, (preco * quantidade) as Total
+FROM produtos;
+
+--- Segmentação/Agrupamento de resultados
+SELECT fabricante_id, SUM(preco) AS Total FROM produtos
+GROUP BY fabricante_id;
+```
+
+
+
+## Consultas (Queries) em duas ou mais tabelas relacionadas (JUNÇÃO/JOIN)
+
+### Exibir o nome do produto e o nome do fabricante do produto
+
+```sql
+-- SELECT nomeDaTabela1.nomeDaColuna, nomeDaTabela2.nomeDaColuna, 
+SELECT produtos.nome AS Produto, fabricantes.nome AS Fabricante
+
+-- JOIN permite JUNTAR as tabelas no momento do SELECT
+FROM produtos JOIN fabricantes
+
+-- ON tabela1.chave_estrangeira = tabela2.chave_primaria
+ON produtos.fabricante_id = fabricantes.id;
+```
+
+### Nome do produto, preço do produto, nome do fabricante ordenados pelo nome do produto e pelo preço
+
+```sql
+SELECT 
+    produtos.nome AS Produto,
+    produtos.preco AS Preço,
+    fabricantes.nome AS Fabricante
+FROM produtos INNER JOIN fabricantes
+ON produtos.fabricante_id = fabricantes.id
+ORDER BY Produto ASC, Preço DESC;
+```
+
+### Fabricante, Soma dos Preços, Quantidade de Produtos POR Fabricante
+
+```sql
+SELECT
+    fabricantes.nome AS Fabricante,
+    SUM(produtos.preco) AS Total,
+    COUNT(produtos.fabricante_id) AS "Qtd de Produtos"
+FROM produtos RIGHT JOIN fabricantes
+ON produtos.fabricante_id = fabricantes.id
+GROUP BY Fabricante
+ORDER BY Total;    
 ```
